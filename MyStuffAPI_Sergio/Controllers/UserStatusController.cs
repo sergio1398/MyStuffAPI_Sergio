@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyStuffAPI_Sergio.Models;
+using MyStuffAPI_Sergio.Attributes;
 
 namespace MyStuffAPI_Sergio.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiKey]
+
     public class UserStatusController : ControllerBase
     {
         private readonly MyStuffDBContext _context;
@@ -22,6 +25,7 @@ namespace MyStuffAPI_Sergio.Controllers
 
         // GET: api/UserStatus
         [HttpGet]
+        
         public async Task<ActionResult<IEnumerable<UserStatus>>> GetUserStatuses()
         {
             return await _context.UserStatuses.ToListAsync();
