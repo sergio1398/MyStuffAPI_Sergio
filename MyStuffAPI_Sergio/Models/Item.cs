@@ -25,6 +25,8 @@ namespace MyStuffAPI_Sergio.Models
         public int? SupplierId { get; set; }
         public int UserId { get; set; }
         public int CurrencyId { get; set; }
+        public string DisplayImageUri { get; set; }
+        public string DisplayImageUrilowRes { get; set; }
 
         public virtual Brand Brand { get; set; }
         public virtual Currency Currency { get; set; }

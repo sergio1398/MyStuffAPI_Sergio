@@ -30,7 +30,7 @@ namespace MyStuffAPI_Sergio
 
             services.AddControllers();
 
-            var conn = "SERVER=DESKTOP-C2RVGLR;DATABASE=MyStuffDB;Trusted_Connection=True;";
+            var conn = "SERVER=DESKTOP-C2RVGLR;DATABASE=MyStuffDB;Trusted_Connection=True;";// ruta conexion a la BD
             // definir una cadena de conexion que va a usar el DB Context
             //TODO: implementar user secrets para encryptar la cadena de conexion
 
@@ -40,6 +40,9 @@ namespace MyStuffAPI_Sergio
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyStuffAPI_Sergio", Version = "v1" });
             });
+
+            services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            // funciona para tarer datos ejemplo incude entre otros.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

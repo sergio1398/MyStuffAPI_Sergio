@@ -43,6 +43,21 @@ namespace MyStuffAPI_Sergio.Controllers
             return item;
         }
 
+
+        // GET: api/Items/5
+        [HttpGet("GetItemsList")]
+        public async Task<ActionResult<IEnumerable<Item>>> GetItemsList(int UserId)
+        {
+            var item = await _context.Items.Where(e => e.UserId == UserId).ToListAsync();
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return item;
+        }
+
         // PUT: api/Items/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

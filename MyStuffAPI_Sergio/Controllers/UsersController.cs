@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyStuffAPI_Sergio.Attributes;
 using MyStuffAPI_Sergio.Models;
+using MyStuffAPI_Sergio.Clases;
 
 namespace MyStuffAPI_Sergio.Controllers
 {
@@ -34,6 +35,42 @@ namespace MyStuffAPI_Sergio.Controllers
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
+        // se va a encrypar el email y password 
+        // GET: api/Users/email/password
+        [HttpGet("{email}/{password}")]
+        public async Task<ActionResult<User>> ValidateUser(string email, string password)
+        {
+            Crypto Encriptar = new Crypto();
+
+            string Email = Encriptar.DesEncriptarData(email);
+
+            var user = await _context.Users.SingleOrDefaultAsync(e => e.Username == Email && e.UserPassword == password && e.UserStatusId == 1);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+        
+
+
+        // GET: api/Users/ValidateUser2
+        [HttpGet("ValidateUser2")]
+        public async Task<ActionResult<User>> ValidateUser2(string email, string password)
+        {
+
+            var user = await _context.Users.SingleOrDefaultAsync(e => e.Username == email && e.UserPassword == password && e.UserStatusId == 1);
 
             if (user == null)
             {
@@ -79,6 +116,7 @@ namespace MyStuffAPI_Sergio.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
